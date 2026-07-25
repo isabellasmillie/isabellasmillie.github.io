@@ -1,3 +1,38 @@
-theme: jekyll-theme-minimal
-title: Bella's homepage
-description: Bookmark this to keep an eye on my project updates!
+title: Bella Smillie
+description: Research, art, music, and writing.
+author: Bella Smillie
+
+# Used to build full URLs for feeds, meta tags, etc.
+url: "https://isabellsmillie.github.io"
+baseurl: ""
+
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title/
+
+# Nav bar order + labels. Edit this list to add/remove/reorder sections.
+nav:
+  - title: About
+    url: /
+  - title: Research
+    url: /research/
+  - title: Art
+    url: /art/
+  - title: Music
+    url: /music/
+  - title: Blog
+    url: /blog/
+
+collections:
+  posts:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+    values:
+      layout: "default"

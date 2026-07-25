@@ -1,0 +1,15 @@
+<header class="site-nav">
+  <a class="site-nav__home" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+  <nav>
+    <ul>
+      {% for item in site.nav %}
+        {% assign is_active = false %}
+        {% if page.url == item.url %}{% assign is_active = true %}{% endif %}
+        {% assign slug = item.url | remove: "/" | default: "about" %}
+        <li class="tab tab--{{ slug }}{% if is_active %} tab--active{% endif %}">
+          <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</header>
