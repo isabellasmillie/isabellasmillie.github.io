@@ -13,9 +13,10 @@ sentences is plenty.</p>
   <div class="index-card__spine"></div>
   <div>
     <p class="tab-label tab-label--research">Research</p>
-    <h3>What you study</h3>
-    <p>A line or two on your research focus, current project, or the
-    question you're chasing.</p>
+    <h3>Hydra vulgaris nervous system</h3>
+    <p>I evaluate simple circuit activity by combining high-throughput
+    behavioral imaging with whole-body calcium imaging of transgenic
+    GCaMP animals.</p>
     <a class="more" href="{{ '/research/' | relative_url }}">view research &rarr;</a>
   </div>
 </div>
