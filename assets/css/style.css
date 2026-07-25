@@ -102,9 +102,11 @@ h1 { font-size: clamp(2rem, 5vw, 2.75rem); }
 h2 { font-size: 1.5rem; margin-top: 3rem; }
 
 .lede {
-  font-size: 1.15rem;
+  font-size: 1rem;
   color: var(--text-dim);
   max-width: 42ch;
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 
 /* ---- Home: index-card sections ---- */
@@ -196,7 +198,8 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   justify-content: center;
 }
 
-.project-row__photo img {
+.project-row__photo img,
+.project-row__photo video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -212,13 +215,25 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 }
 
 .project-row h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.2rem;
+  margin: 0 0 0.25rem;
+  font-size: 1.4rem;
+  line-height: 1.1;
+}
+
+.section-heading {
+  margin-top: 3rem;
 }
 
 .project-row h3 a {
   text-decoration: none;
   border-bottom: 1px solid transparent;
+}
+
+.project-description {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  line-height: 1.5;
 }
 
 .project-row h3 a:hover {
