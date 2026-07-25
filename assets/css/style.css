@@ -86,9 +86,9 @@ button:focus-visible {
 
 /* ---- Page shell ---- */
 .page {
-  max-width: 760px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 3rem) 6rem;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem) 4rem;
 }
 
 h1, h2, h3 {
@@ -104,9 +104,11 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 .lede {
   font-size: 1rem;
   color: var(--text-dim);
-  max-width: 42ch;
-  white-space: nowrap;
-  overflow-wrap: normal;
+  max-width: none;
+  width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* ---- Home: index-card sections ---- */
@@ -246,6 +248,143 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 }
 
 /* image / media grid for art & music pages */
+.spotify-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 960px) {
+  .spotify-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .spotify-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.spotify-block {
+  border: 1px solid var(--accent-music);
+  border-radius: 16px;
+  padding: 1.25rem;
+  background: rgba(209, 169, 75, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.spotify-block--sundust {
+  border-color: rgba(129, 126, 194, 0.6);
+  background: rgba(129, 126, 194, 0.12);
+}
+
+.spotify-block--sundust h2 {
+  color: #f9f1b4;
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  line-height: 1.05;
+}
+
+.spotify-block--sundust .spotify-description {
+  color: #817ec2;
+  margin: 0 0 0.35rem;
+}
+
+.spotify-block--cl2g {
+  border-color: rgba(22, 74, 27, 0.6);
+  background: rgba(22, 74, 27, 0.12);
+}
+
+.spotify-block--cl2g h2 { color: #f5430c; }
+.spotify-block--cl2g .spotify-description { color: #164a1b; }
+
+.spotify-block--lucretia {
+  border-color: rgba(54, 29, 89, 0.6);
+  background: rgba(54, 29, 89, 0.12);
+}
+
+.spotify-block--lucretia h2 { color: #991d3c; }
+.spotify-block--lucretia .spotify-description { color: #361d59; }
+
+.spotify-block--no9coal {
+  border-color: rgba(235, 230, 167, 0.6);
+  background: rgba(235, 230, 167, 0.12);
+}
+
+.spotify-block--no9coal h2 { color: #8a2208; }
+.spotify-block--no9coal .spotify-description { color: #ebe6a7; }
+
+.spotify-block--dendrite-garden {
+  border-color: rgba(9, 135, 85, 0.6);
+  background: rgba(9, 135, 85, 0.12);
+}
+
+.spotify-block--dendrite-garden h2 { color: #1466f5; }
+.spotify-block--dendrite-garden .spotify-description { color: #098755; }
+
+.spotify-block--missing-one {
+  border-color: rgba(153, 230, 60, 0.6);
+  background: rgba(153, 230, 60, 0.12);
+}
+
+.spotify-block--missing-one h2 { color: #e63c44; }
+.spotify-block--missing-one .spotify-description { color: #99e63c; }
+
+.spotify-block--fossilize {
+  border-color: rgba(98, 69, 107, 0.6);
+  background: rgba(98, 69, 107, 0.12);
+}
+
+.spotify-block--fossilize h2 { color: #e7ed9f; }
+.spotify-block--fossilize .spotify-description { color: #62456b; }
+
+.spotify-block--ceres {
+  border-color: rgba(247, 92, 64, 0.6);
+  background: rgba(247, 92, 64, 0.12);
+}
+
+.spotify-block--ceres h2 { color: #041f26; }
+.spotify-block--ceres .spotify-description { color: #f75c40; }
+
+.spotify-block--friday-harbor {
+  border-color: rgba(69, 56, 48, 0.6);
+  background: rgba(69, 56, 48, 0.12);
+}
+
+.spotify-block--friday-harbor h2 { color: #19a8e0; }
+.spotify-block--friday-harbor .spotify-description { color: #453830; }
+
+.spotify-block h2 {
+  margin: 0.35rem 0 0.75rem;
+  font-size: 2.4rem;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.spotify-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.5rem;
+}
+
+.spotify-block p {
+  margin: 0 0 1rem;
+  color: var(--text-dim);
+}
+
+.spotify-block iframe {
+  width: 100%;
+  min-height: 260px;
+  border: none;
+  border-radius: 12px;
+}
+
 .media-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
