@@ -307,23 +307,23 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 }
 
 .spotify-block--lucretia h2 { color: #991d3c; }
-.spotify-block--lucretia .spotify-description { color: #361d59; }
+.spotify-block--lucretia .spotify-description { color: #6e3bb4; }
 
 .spotify-block--no9coal {
   border-color: rgba(235, 230, 167, 0.6);
   background: rgba(235, 230, 167, 0.12);
 }
 
-.spotify-block--no9coal h2 { color: #8a2208; }
+.spotify-block--no9coal h2 { color: #da4722; }
 .spotify-block--no9coal .spotify-description { color: #ebe6a7; }
 
 .spotify-block--dendrite-garden {
-  border-color: rgba(9, 135, 85, 0.6);
-  background: rgba(9, 135, 85, 0.12);
+  border-color: rgba(16, 137, 153, 0.6);
+  background: rgba(9, 135, 112, 0.12);
 }
 
-.spotify-block--dendrite-garden h2 { color: #1466f5; }
-.spotify-block--dendrite-garden .spotify-description { color: #098755; }
+.spotify-block--dendrite-garden h2 { color: #38b5d8; }
+.spotify-block--dendrite-garden .spotify-description { color: #1ab175; }
 
 .spotify-block--missing-one {
   border-color: rgba(153, 230, 60, 0.6);
@@ -339,14 +339,14 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 }
 
 .spotify-block--fossilize h2 { color: #e7ed9f; }
-.spotify-block--fossilize .spotify-description { color: #62456b; }
+.spotify-block--fossilize .spotify-description { color: #845e8f; }
 
 .spotify-block--ceres {
   border-color: rgba(247, 92, 64, 0.6);
   background: rgba(247, 92, 64, 0.12);
 }
 
-.spotify-block--ceres h2 { color: #041f26; }
+.spotify-block--ceres h2 { color: #1b5665; }
 .spotify-block--ceres .spotify-description { color: #f75c40; }
 
 .spotify-block--friday-harbor {
