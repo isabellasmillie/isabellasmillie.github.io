@@ -1,4 +1,13 @@
 /* ---- Tokens ---- */
+@font-face {
+  font-family: 'Midstar';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Midstar'), local('Midstar_Personal_Use'),
+       url('/assets/fonts/Midstar_Personal_Use.otf') format('opentype');
+}
+
 :root {
   --bg: #1b1b1d;
   --bg-alt: #232326;
@@ -299,15 +308,15 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 }
 
 .spotify-block--cl2g h2 { color: #f5430c; }
-.spotify-block--cl2g .spotify-description { color: #164a1b; }
+.spotify-block--cl2g .spotify-description { color: #2c8635; }
 
 .spotify-block--lucretia {
-  border-color: rgba(54, 29, 89, 0.6);
+  border-color: rgba(130, 85, 192, 0.6);
   background: rgba(54, 29, 89, 0.12);
 }
 
 .spotify-block--lucretia h2 { color: #991d3c; }
-.spotify-block--lucretia .spotify-description { color: #6e3bb4; }
+.spotify-block--lucretia .spotify-description { color: #905bd8; }
 
 .spotify-block--no9coal {
   border-color: rgba(235, 230, 167, 0.6);
@@ -318,7 +327,7 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 .spotify-block--no9coal .spotify-description { color: #ebe6a7; }
 
 .spotify-block--dendrite-garden {
-  border-color: rgba(16, 137, 153, 0.6);
+  border-color: rgba(31, 188, 149, 0.6);
   background: rgba(9, 135, 112, 0.12);
 }
 
@@ -346,16 +355,16 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   background: rgba(247, 92, 64, 0.12);
 }
 
-.spotify-block--ceres h2 { color: #1b5665; }
+.spotify-block--ceres h2 { color: #248097; }
 .spotify-block--ceres .spotify-description { color: #f75c40; }
 
 .spotify-block--friday-harbor {
-  border-color: rgba(69, 56, 48, 0.6);
+  border-color: rgba(144, 118, 103, 0.6);
   background: rgba(69, 56, 48, 0.12);
 }
 
 .spotify-block--friday-harbor h2 { color: #19a8e0; }
-.spotify-block--friday-harbor .spotify-description { color: #453830; }
+.spotify-block--friday-harbor .spotify-description { color: #866956; }
 
 .spotify-block h2 {
   margin: 0.35rem 0 0.75rem;
@@ -408,6 +417,197 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   font-size: 0.78rem;
   color: var(--text-dim);
   margin-top: 0.5rem;
+}
+
+.model-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  margin: 2rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111;
+}
+
+.model-canvas-wrapper canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.model-canvas-helper {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.art-grid {
+  column-count: 2;
+  column-gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.art-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  background: transparent;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.art-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+@media (max-width: 900px) {
+  .art-grid {
+    column-count: 1;
+  }
+}
+
+.chimera-heading-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chimera-heading-row .art-subheading {
+  flex: 1;
+}
+
+.chimera-heading-image {
+  width: min(360px, 28vw);
+  flex: none;
+}
+
+.chimera-heading-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chimera-grid {
+  column-count: 2;
+  column-gap: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.chimera-grid .art-item {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .art-grid,
+  .chimera-grid {
+    column-count: 1;
+  }
+}
+
+.art-subheading {
+  font-size: 4.5rem;
+  line-height: 1.05;
+  margin-top: 2.5rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  text-align: right;
+  padding-right: 0;
+}
+
+.art-subheading--digital {
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.art-subheading--chimera {
+  font-family: var(--font-display);
+}
+
+.art-subheading--analog {
+  font-family: 'Midstar', cursive;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.art-subheading--computer {
+  display: block;
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.art-subheading-note {
+  display: block;
+  font-size: 0.55em;
+  margin-top: 0.2rem;
+  font-style: italic;
+  font-family: var(--font-body);
+  letter-spacing: normal;
+}
+
+@media (max-width: 760px) {
+  .art-subheading {
+    font-size: 3rem;
+  }
+}
+
+.art-item:hover img {
+  transform: scale(1.03);
+  filter: blur(4px) brightness(0.75);
+}
+
+.art-item figcaption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.25rem;
+  color: var(--text);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.art-item:hover figcaption {
+  opacity: 1;
+}
+
+.art-item figcaption span {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.art-item figcaption small {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.paintings-grid {
+  margin-top: 1.75rem;
 }
 
 /* ---- Footer ---- */
