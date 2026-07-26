@@ -3,11 +3,9 @@ layout: default
 title: About
 ---
 
-# Hi, I'm Bella.
+# Hi, I'm Isabella.
 
-<p class="lede">A short intro goes here — who you are, what you work on, and
-the thread that connects your research, art, and music. Two or three
-sentences is plenty.</p>
+<p class="lede">I'm from McKinney, Texas. I'm interested in evolutionary neuroscience, unsettling but beautiful art, and most music. I try to summarize my thoughts on things I read and watch on my blog.</p>
 
 <div class="index-card index-card--research">
   <div class="index-card__spine"></div>
@@ -25,9 +23,8 @@ sentences is plenty.</p>
   <div class="index-card__spine"></div>
   <div>
     <p class="tab-label tab-label--art">Art</p>
-    <h3>What you make</h3>
-    <p>A line on your medium — painting, photography, illustration,
-    whatever it is.</p>
+    <h3>What I've made</h3>
+    <p>Digital work, short film in progress, paintings, drawings, and a song or two</p>
     <a class="more" href="{{ '/art/' | relative_url }}">view art &rarr;</a>
   </div>
 </div>
@@ -36,8 +33,8 @@ sentences is plenty.</p>
   <div class="index-card__spine"></div>
   <div>
     <p class="tab-label tab-label--music">Music</p>
-    <h3>What you play</h3>
-    <p>A line on your instrument, project, or genre.</p>
+    <h3>What I listen to</h3>
+    <p>... and you should, too.</p>
     <a class="more" href="{{ '/music/' | relative_url }}">view music &rarr;</a>
   </div>
 </div>
@@ -46,8 +43,8 @@ sentences is plenty.</p>
   <div class="index-card__spine"></div>
   <div>
     <p class="tab-label tab-label--blog">Blog</p>
-    <h3>What you're writing</h3>
-    <p>Notes, essays, or updates — whatever you want to write about.</p>
+    <h3>What I think</h3>
+    <p>Short essays on other people's work</p>
     <a class="more" href="{{ '/blog/' | relative_url }}">read the blog &rarr;</a>
   </div>
 </div>
