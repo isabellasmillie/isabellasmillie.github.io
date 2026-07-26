@@ -51,7 +51,7 @@ scene.add(directional);
 
 const loader = new GLTFLoader();
 loader.load(
-  '{{ "/assets/models/CoronalHydra3Dmodel.glb" | relative_url }}',
+  '{{ "/assets/models/CoronalHydra3Dmodel-optimized.glb" | relative_url }}',
   (gltf) => {
     const model = gltf.scene;
     scene.add(model);

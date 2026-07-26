@@ -3,4 +3,5 @@ _site/
 .jekyll-cache/
 .bundle/
 vendor/bundle/
-assets/models/*.glb
+assets/models/CoronalHydra3Dmodel.glb
+!assets/models/CoronalHydra3Dmodel-optimized.glb
