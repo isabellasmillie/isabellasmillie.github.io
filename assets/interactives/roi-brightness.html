@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROI Brightness Tracker</title>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #1b1b1d;
+    --bg-alt: #232326;
+    --line: #38383c;
+    --text: #ede8de;
+    --text-dim: #a8a39a;
+    --accent: #6e8f71;
+    --font-body: "Work Sans", -apple-system, sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+  }
+  .app {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    padding: 1.25rem;
+  }
+  .pane {
+    background: var(--bg-alt);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 1rem;
+  }
+  .video-pane { flex: 1 1 420px; min-width: 320px; }
+  .plot-pane { flex: 1 1 420px; min-width: 320px; display: flex; flex-direction: column; }
+
+  .video-wrap {
+    position: relative;
+    width: 100%;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    line-height: 0;
+  }
+  video { width: 100%; display: block; }
+  canvas.overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    cursor: crosshair;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  button {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 0.5rem 0.85rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  button:hover:not(:disabled) {
+    border-color: var(--accent);
+  }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .status {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.6rem;
+  }
+  .status strong { color: var(--accent); }
+
+  .plot-wrap { flex: 1; position: relative; min-height: 260px; }
+
+  .hint {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="pane video-pane">
+    <div class="video-wrap">
+      <video id="video" playsinline src="/assets/videos/research/learning.mp4"></video>
+      <canvas class="overlay" id="overlay"></canvas>
+    </div>
+    <div class="row">
+      <button id="playBtn" disabled>play</button>
+      <button id="clearRectBtn" disabled>clear rectangle</button>
+      <button id="clearPlotBtn" disabled>clear plot</button>
+      <button id="exportBtn" disabled>export csv</button>
+    </div>
+    <p class="status" id="status">Loading video&hellip;</p>
+    <p class="hint">Click and drag on the video to set the sampling rectangle. You can redraw it any time, including while the video plays.</p>
+  </div>
+
+  <div class="pane plot-pane">
+    <div class="plot-wrap">
+      <canvas id="chart"></canvas>
+    </div>
+  </div>
+</div>
+
+<script>
+// Ensure Chart.js is loaded before running the app
+function startApp() {
+  if (typeof Chart === 'undefined') {
+    requestAnimationFrame(startApp);
+    return;
+  }
+
+(function () {
+  const video = document.getElementById('video');
+  const overlay = document.getElementById('overlay');
+  const octx = overlay.getContext('2d');
+  const playBtn = document.getElementById('playBtn');
+  const clearRectBtn = document.getElementById('clearRectBtn');
+  const clearPlotBtn = document.getElementById('clearPlotBtn');
+  const exportBtn = document.getElementById('exportBtn');
+  const statusEl = document.getElementById('status');
+
+  // hidden sampling canvas, sized to the video's native resolution
+  const sampleCanvas = document.createElement('canvas');
+  const sctx = sampleCanvas.getContext('2d', { willReadFrequently: true });
+
+  let rect = null;      // { x, y, w, h } in native video pixel coordinates
+  let dragStart = null; // { x, y } in overlay/display coordinates
+  let dragging = false;
+  let rafId = null;
+  let data = []; // { t, y }
+
+  const chart = new Chart(document.getElementById('chart').getContext('2d'), {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'mean brightness',
+        data: [],
+        parsing: false,
+        borderColor: '#6e8f71',
+        backgroundColor: 'rgba(110,143,113,0.15)',
+        borderWidth: 1.5,
+        pointRadius: 0,
+        tension: 0,
+        fill: true,
+      }]
+    },
+    options: {
+      animation: false,
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          type: 'linear',
+          title: { display: true, text: 'time (s)', color: '#a8a39a' },
+          ticks: { color: '#a8a39a' },
+          grid: { color: '#38383c' },
+        },
+        y: {
+          min: 0,
+          max: 255,
+          title: { display: true, text: 'mean brightness (0\u2013255)', color: '#a8a39a' },
+          ticks: { color: '#a8a39a' },
+          grid: { color: '#38383c' },
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+
+  function setStatus(msg) { statusEl.innerHTML = msg; }
+
+  function resizeOverlay() {
+    const box = video.getBoundingClientRect();
+    overlay.width = box.width;
+    overlay.height = box.height;
+    drawOverlay();
+  }
+
+  function displayRectFromNative() {
+    if (!rect || !video.videoWidth) return null;
+    const scaleX = overlay.width / video.videoWidth;
+    const scaleY = overlay.height / video.videoHeight;
+    return {
+      x: rect.x * scaleX,
+      y: rect.y * scaleY,
+      w: rect.w * scaleX,
+      h: rect.h * scaleY,
+    };
+  }
+
+  function drawOverlay(previewDisplayRect) {
+    octx.clearRect(0, 0, overlay.width, overlay.height);
+    const r = previewDisplayRect || displayRectFromNative();
+    if (!r) return;
+    octx.strokeStyle = '#6e8f71';
+    octx.lineWidth = 2;
+    octx.strokeRect(r.x, r.y, r.w, r.h);
+    octx.fillStyle = 'rgba(110,143,113,0.15)';
+    octx.fillRect(r.x, r.y, r.w, r.h);
+  }
+
+  function overlayPoint(evt) {
+    const box = overlay.getBoundingClientRect();
+    const clientX = (evt.touches ? evt.touches[0].clientX : evt.clientX);
+    const clientY = (evt.touches ? evt.touches[0].clientY : evt.clientY);
+    return { x: clientX - box.left, y: clientY - box.top };
+  }
+
+  function startDrag(evt) {
+    if (!video.videoWidth) return;
+    dragging = true;
+    dragStart = overlayPoint(evt);
+    evt.preventDefault();
+  }
+
+  function moveDrag(evt) {
+    if (!dragging) return;
+    const p = overlayPoint(evt);
+    const x = Math.min(dragStart.x, p.x);
+    const y = Math.min(dragStart.y, p.y);
+    const w = Math.abs(p.x - dragStart.x);
+    const h = Math.abs(p.y - dragStart.y);
+    drawOverlay({ x, y, w, h });
+    evt.preventDefault();
+  }
+
+  function endDrag(evt) {
+    if (!dragging) return;
+    dragging = false;
+    const p = overlayPoint(evt);
+    const x = Math.min(dragStart.x, p.x);
+    const y = Math.min(dragStart.y, p.y);
+    const w = Math.abs(p.x - dragStart.x);
+    const h = Math.abs(p.y - dragStart.y);
+
+    if (w < 4 || h < 4) { // too small, ignore
+      drawOverlay();
+      return;
+    }
+
+    const scaleX = video.videoWidth / overlay.width;
+    const scaleY = video.videoHeight / overlay.height;
+    rect = {
+      x: Math.round(x * scaleX),
+      y: Math.round(y * scaleY),
+      w: Math.round(w * scaleX),
+      h: Math.round(h * scaleY),
+    };
+    clearRectBtn.disabled = false;
+    setStatus(`Rectangle set: <strong>${rect.w}\u00d7${rect.h}px</strong>. Press play to start sampling.`);
+    drawOverlay();
+  }
+
+  overlay.addEventListener('mousedown', startDrag);
+  overlay.addEventListener('mousemove', moveDrag);
+  window.addEventListener('mouseup', endDrag);
+  overlay.addEventListener('touchstart', startDrag, { passive: false });
+  overlay.addEventListener('touchmove', moveDrag, { passive: false });
+  overlay.addEventListener('touchend', endDrag);
+
+  function meanBrightness() {
+    sctx.drawImage(video, 0, 0, sampleCanvas.width, sampleCanvas.height);
+    const { x, y, w, h } = rect;
+    const clampedW = Math.min(w, sampleCanvas.width - x);
+    const clampedH = Math.min(h, sampleCanvas.height - y);
+    if (clampedW <= 0 || clampedH <= 0) return null;
+    const frame = sctx.getImageData(x, y, clampedW, clampedH).data;
+    let sum = 0;
+    const n = frame.length / 4;
+    for (let i = 0; i < frame.length; i += 4) {
+      sum += 0.299 * frame[i] + 0.587 * frame[i + 1] + 0.114 * frame[i + 2];
+    }
+    return sum / n;
+  }
+
+  function tick() {
+    if (rect && !video.paused && !video.ended) {
+      const y = meanBrightness();
+      if (y !== null) {
+        data.push({ x: video.currentTime, y: y });
+        chart.data.datasets[0].data = data;
+        chart.update('none');
+        clearPlotBtn.disabled = false;
+        exportBtn.disabled = false;
+      }
+    }
+    rafId = requestAnimationFrame(tick);
+  }
+
+  video.addEventListener('error', () => {
+    setStatus('Could not load <strong>assets/videos/research/learning.mp4</strong>. Check that the file exists at that path relative to this tool.');
+  });
+
+  video.addEventListener('loadedmetadata', () => {
+    sampleCanvas.width = video.videoWidth;
+    sampleCanvas.height = video.videoHeight;
+    resizeOverlay();
+    playBtn.disabled = false;
+    setStatus(`Video loaded: <strong>${video.videoWidth}\u00d7${video.videoHeight}px</strong>, ${video.duration.toFixed(1)}s. Click and drag on the video to select a region.`);
+  });
+
+  window.addEventListener('resize', resizeOverlay);
+
+  playBtn.addEventListener('click', () => {
+    if (video.paused) {
+      if (!rect) {
+        setStatus('Draw a rectangle on the video first.');
+        return;
+      }
+      video.play();
+    } else {
+      video.pause();
+    }
+  });
+  video.addEventListener('play', () => { playBtn.textContent = 'pause'; });
+  video.addEventListener('pause', () => { playBtn.textContent = 'play'; });
+  video.addEventListener('ended', () => { playBtn.textContent = 'play'; });
+
+  clearRectBtn.addEventListener('click', () => {
+    rect = null;
+    clearRectBtn.disabled = true;
+    drawOverlay();
+    setStatus('Rectangle cleared. Draw a new one to resume sampling.');
+  });
+
+  clearPlotBtn.addEventListener('click', () => {
+    data = [];
+    chart.data.datasets[0].data = data;
+    chart.update('none');
+    clearPlotBtn.disabled = true;
+    exportBtn.disabled = true;
+  });
+
+  exportBtn.addEventListener('click', () => {
+    let csv = 'time_s,mean_brightness\n';
+    data.forEach(d => { csv += `${d.x.toFixed(3)},${d.y.toFixed(3)}\n`; });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'roi-brightness.csv';
+    a.click();
+  });
+
+  rafId = requestAnimationFrame(tick);
+})();
+}
+
+startApp();
+</script>
+</body>
+</html>
