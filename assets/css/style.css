@@ -138,7 +138,8 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 
 .tab-label {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin: 0 0 0.35rem;
@@ -434,6 +435,21 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.model-canvas-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: #fff;
+  background: rgba(15, 15, 15, 0.78);
+  backdrop-filter: blur(4px);
+  text-align: center;
+  padding: 1rem;
 }
 
 .model-canvas-helper {
