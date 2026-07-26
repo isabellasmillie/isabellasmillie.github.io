@@ -26,6 +26,7 @@ and current status.</p>
 import * as THREE from 'three';
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/loaders/DRACOLoader.js';
 
 const container = document.getElementById('hydra-model-container');
 const scene = new THREE.Scene();
@@ -42,6 +43,11 @@ controls.dampingFactor = 0.05;
 controls.autoRotate = false;
 controls.target.set(0, 0, 0);
 
+const loadingOverlay = document.createElement('div');
+loadingOverlay.className = 'model-canvas-loading';
+loadingOverlay.textContent = 'Loading model…';
+container.appendChild(loadingOverlay);
+
 const ambient = new THREE.AmbientLight(0xffffff, 0.8);
 scene.add(ambient);
 
@@ -49,7 +55,13 @@ const directional = new THREE.DirectionalLight(0xffffff, 0.7);
 directional.position.set(5, 10, 7.5);
 scene.add(directional);
 
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+dracoLoader.setDecoderConfig({ type: 'js' });
+dracoLoader.preload();
+
 const loader = new GLTFLoader();
+loader.setDRACOLoader(dracoLoader);
 loader.load(
   '{{ "/assets/models/CoronalHydra3Dmodel-optimized.glb" | relative_url }}',
   (gltf) => {
@@ -74,15 +86,30 @@ loader.load(
     const center = box.getCenter(new THREE.Vector3());
     model.position.sub(center);
 
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const cameraZ = maxDim * 2.2;
-    camera.position.set(cameraZ, cameraZ * 0.6, cameraZ);
+    const maxDim = Math.max(size.x, size.y, size.z, 1);
+    const zoomDistance = maxDim * 0.15; // very deep 900% zoom
+    camera.position.set(-zoomDistance * 1.1, zoomDistance * 1.35, zoomDistance * 0.2);
+    camera.near = Math.max(0.001, maxDim / 200);
+    camera.far = maxDim * 20;
+    camera.updateProjectionMatrix();
     camera.lookAt(0, 0, 0);
 
+    controls.maxDistance = maxDim * 6;
+    controls.minDistance = maxDim * 0.25;
+    controls.target.set(0, 0, 0);
     controls.update();
+
+    loadingOverlay.style.display = 'none';
   },
-  undefined,
+  (xhr) => {
+    if (xhr.lengthComputable) {
+      const percent = Math.round((xhr.loaded / xhr.total) * 100);
+      loadingOverlay.textContent = `Loading model ${percent}%`;
+    }
+  },
   (error) => {
+    loadingOverlay.textContent = 'Failed to load model';
+    loadingOverlay.style.opacity = '1';
     console.error('Model load error:', error);
   }
 );
