@@ -10,7 +10,10 @@ permalink: /research/
 
 <div class="project-row">
   <div class="project-row__photo">
-    <span>Virtual Hydra</span>
+    <video autoplay muted loop playsinline class="project-row__video">
+      <source src="{{ '/assets/videos/research/VirtualHydra.mp4' | relative_url }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
   <div>
     <h3><a href="https://isabellasmillie.github.io/VirtualHydra/">Virtual Hydra</a></h3>
@@ -48,7 +51,7 @@ permalink: /research/
 
 <div class="project-row">
   <div class="project-row__photo">
-    <img src="{{ '/assets/images/research/nematostella.jpg' | relative_url }}" alt="Nematostella vectensis project photo" onerror="this.parentElement.innerHTML='<span>photo</span>'">
+    <img src="{{ '/assets/images/nematostella.jpg' | relative_url }}" alt="Nematostella vectensis project photo" onerror="this.parentElement.innerHTML='<span>photo</span>'">
   </div>
   <div>
     <h3><a href="{{ '/research/nematostella-vectensis/' | relative_url }}">Nematostella vectensis ASOI and ASOII knockdowns</a></h3>
