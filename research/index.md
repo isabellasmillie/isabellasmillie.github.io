@@ -10,14 +10,10 @@ permalink: /research/
 
 <div class="project-row">
   <div class="project-row__photo">
-    <video autoplay muted loop playsinline poster="{{ '/assets/images/research/liconn.jpg' | relative_url }}" class="project-row__video">
-      <source src="{{ '/assets/videos/research/liconn.mp4' | relative_url }}" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <span>Virtual Hydra</span>
   </div>
   <div>
-    <h3><a href="{{ '/research/hydra-liconn/' | relative_url }}">Hydra LICONN</a></h3>
-    <p class="project-description">Building the full connectome via expansion microscopy</p>
+    <h3><a href="https://isabellasmillie.github.io/VirtualHydra/">Virtual Hydra</a></h3>
   </div>
 </div>
 
@@ -31,6 +27,19 @@ permalink: /research/
   <div>
     <h3><a href="{{ '/research/hydra-learning/' | relative_url }}">Hydra Learning</a></h3>
     <p class="project-description">Evaluating ensemble function and adaptation to repeated stimuli</p>
+  </div>
+</div>
+
+<div class="project-row">
+  <div class="project-row__photo">
+    <video autoplay muted loop playsinline poster="{{ '/assets/images/research/liconn.jpg' | relative_url }}" class="project-row__video">
+      <source src="{{ '/assets/videos/research/liconn.mp4' | relative_url }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  <div>
+    <h3><a href="{{ '/research/hydra-liconn/' | relative_url }}">Hydra LICONN</a></h3>
+    <p class="project-description">Building the full connectome via expansion microscopy</p>
   </div>
 </div>
 
