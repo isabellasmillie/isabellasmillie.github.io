@@ -24,7 +24,7 @@ permalink: /research/
 <div class="project-row">
   <div class="project-row__photo">
     <video autoplay muted loop playsinline poster="{{ '/assets/images/research/learning.jpg' | relative_url }}" class="project-row__video">
-      <source src="{{ '/assets/videos/research/learning.mp4' | relative_url }}" type="video/mp4">
+      <source src="{{ '/assets/videos/research/learning-web.mp4?v=baseline-20261110' | relative_url }}" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </div>
