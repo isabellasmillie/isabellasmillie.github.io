@@ -252,6 +252,48 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   border-color: var(--accent-research);
 }
 
+.hydra-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.hydra-gallery figure {
+  margin: 0;
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hydra-gallery img,
+.hydra-gallery video {
+  display: block;
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  background: #000;
+}
+
+.hydra-caption {
+  margin: 0 0 1.5rem;
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .hydra-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .hydra-gallery img,
+  .hydra-gallery video {
+    height: 260px;
+  }
+}
+
 @media (max-width: 480px) {
   .project-row { grid-template-columns: 1fr; }
   .project-row__photo { width: 100%; height: 180px; }
