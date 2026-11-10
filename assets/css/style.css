@@ -626,6 +626,33 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   margin-top: 1.75rem;
 }
 
+.analog-gallery {
+  column-count: 2;
+  column-gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+
+.analog-gallery .art-item {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 1.5rem;
+  break-inside: avoid;
+}
+
+.analog-gallery .art-item img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .analog-gallery {
+    column-count: 1;
+  }
+}
+
 /* ---- Footer ---- */
 .site-footer {
   display: flex;

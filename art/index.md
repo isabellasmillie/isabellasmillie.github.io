@@ -6,7 +6,6 @@ permalink: /art/
 
 <p class="tab-label tab-label--art">Art</p>
 <h1>My art</h1>
-<p class="lede">I have been drawing and painting ever since I can remember.</p>
 
 <h2 class="art-subheading art-subheading--digital">Digital</h2>
 <div class="art-grid">
@@ -92,9 +91,65 @@ permalink: /art/
 </div>
 
 <h2 class="art-subheading art-subheading--analog">Analog</h2>
-<div class="media-grid paintings-grid">
-  <figure>
-    <img src="{{ '/assets/images/art/placeholder-painting.jpg' | relative_url }}" alt="Painting placeholder">
-    <figcaption>Title, medium, year</figcaption>
+<div class="analog-gallery">
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/roadtonowhere.JPG' | relative_url }}" alt="Road to Nowhere">
+    <figcaption>
+      <span>Road to Nowhere</span>
+    </figcaption>
+  </figure>
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/desol.JPG' | relative_url }}" alt="Desol">
+    <figcaption>
+      <span>Desol</span>
+    </figcaption>
+  </figure>
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/eveningshade.JPG' | relative_url }}" alt="Evening Shade">
+    <figcaption>
+      <span>Evening Shade</span>
+    </figcaption>
+  </figure>
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/jellyscape.JPG' | relative_url }}" alt="Jellyscape">
+    <figcaption>
+      <span>Jellyscape</span>
+    </figcaption>
+  </figure>
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/nephilim.JPG' | relative_url }}" alt="Nephilim">
+    <figcaption>
+      <span>Nephilim</span>
+    </figcaption>
+  </figure>
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/matre.JPG' | relative_url }}" alt="Matre">
+    <figcaption>
+      <span>Matre</span>
+    </figcaption>
+  </figure>
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/plumb.JPG' | relative_url }}" alt="Plumb">
+    <figcaption>
+      <span>Plumb</span>
+    </figcaption>
+  </figure>
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/portals.JPG' | relative_url }}" alt="Portals">
+    <figcaption>
+      <span>Portals</span>
+    </figcaption>
+  </figure>
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/squidforest.jpg' | relative_url }}" alt="Squid Forest">
+    <figcaption>
+      <span>Squid Forest</span>
+    </figcaption>
+  </figure>
+  <figure class="art-item">
+    <img src="{{ '/assets/images/art/sunrise.JPG' | relative_url }}" alt="Sunrise">
+    <figcaption>
+      <span>Sunrise</span>
+    </figcaption>
   </figure>
 </div>
