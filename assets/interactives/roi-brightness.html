@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ROI Brightness Tracker</title>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 <style>
   :root {
     --bg: #1b1b1d;
@@ -87,6 +86,13 @@
   .status strong { color: var(--accent); }
 
   .plot-wrap { flex: 1; position: relative; min-height: 260px; }
+  #chart {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+  }
 
   .hint {
     font-family: var(--font-mono);
@@ -122,72 +128,27 @@
 </div>
 
 <script>
-// Ensure Chart.js is loaded before running the app
-function startApp() {
-  if (typeof Chart === 'undefined') {
-    requestAnimationFrame(startApp);
-    return;
-  }
-
 (function () {
   const video = document.getElementById('video');
+  video.loop = true;
   const overlay = document.getElementById('overlay');
   const octx = overlay.getContext('2d');
+  const plotCanvas = document.getElementById('chart');
+  const pctx = plotCanvas.getContext('2d');
   const playBtn = document.getElementById('playBtn');
   const clearRectBtn = document.getElementById('clearRectBtn');
   const clearPlotBtn = document.getElementById('clearPlotBtn');
   const exportBtn = document.getElementById('exportBtn');
   const statusEl = document.getElementById('status');
 
-  // hidden sampling canvas, sized to the video's native resolution
   const sampleCanvas = document.createElement('canvas');
   const sctx = sampleCanvas.getContext('2d', { willReadFrequently: true });
 
-  let rect = null;      // { x, y, w, h } in native video pixel coordinates
-  let dragStart = null; // { x, y } in overlay/display coordinates
+  let rect = null;
+  let dragStart = null;
   let dragging = false;
-  let rafId = null;
-  let data = []; // { t, y }
-
-  const chart = new Chart(document.getElementById('chart').getContext('2d'), {
-    type: 'line',
-    data: {
-      datasets: [{
-        label: 'mean brightness',
-        data: [],
-        parsing: false,
-        borderColor: '#6e8f71',
-        backgroundColor: 'rgba(110,143,113,0.15)',
-        borderWidth: 1.5,
-        pointRadius: 0,
-        tension: 0,
-        fill: true,
-      }]
-    },
-    options: {
-      animation: false,
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          type: 'linear',
-          title: { display: true, text: 'time (s)', color: '#a8a39a' },
-          ticks: { color: '#a8a39a' },
-          grid: { color: '#38383c' },
-        },
-        y: {
-          min: 0,
-          max: 255,
-          title: { display: true, text: 'mean brightness (0\u2013255)', color: '#a8a39a' },
-          ticks: { color: '#a8a39a' },
-          grid: { color: '#38383c' },
-        }
-      },
-      plugins: {
-        legend: { display: false }
-      }
-    }
-  });
+  let data = [];
+  let previousTime = 0;
 
   function setStatus(msg) { statusEl.innerHTML = msg; }
 
@@ -219,6 +180,83 @@ function startApp() {
     octx.strokeRect(r.x, r.y, r.w, r.h);
     octx.fillStyle = 'rgba(110,143,113,0.15)';
     octx.fillRect(r.x, r.y, r.w, r.h);
+  }
+
+  function drawPlot() {
+    const rect = plotCanvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const w = Math.max(260, Math.floor(rect.width));
+    const h = Math.max(220, Math.floor(rect.height));
+    plotCanvas.width = w * dpr;
+    plotCanvas.height = h * dpr;
+    pctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    pctx.clearRect(0, 0, w, h);
+
+    pctx.strokeStyle = '#38383c';
+    pctx.lineWidth = 1;
+    pctx.beginPath();
+    const leftPad = 58;
+    const rightPad = 18;
+    const topPad = 20;
+    const bottomPad = 38;
+    const chartW = w - leftPad - rightPad;
+    const chartH = h - topPad - bottomPad;
+    const maxX = 8;
+    const maxY = 127.5;
+
+    pctx.moveTo(leftPad, topPad);
+    pctx.lineTo(leftPad, h - bottomPad);
+    pctx.lineTo(w - rightPad, h - bottomPad);
+    pctx.stroke();
+
+    pctx.fillStyle = '#a8a39a';
+    pctx.font = '11px "IBM Plex Mono", monospace';
+    pctx.textAlign = 'center';
+    [0, 2, 4, 6, 8].forEach((tick) => {
+      const x = leftPad + (tick / maxX) * chartW;
+      pctx.beginPath();
+      pctx.moveTo(x, topPad);
+      pctx.lineTo(x, h - bottomPad);
+      pctx.stroke();
+      pctx.fillText(tick + 's', x, h - 12);
+    });
+
+    pctx.textAlign = 'right';
+    [0, 64, 127.5].forEach((tick) => {
+      const y = topPad + ((maxY - tick) / maxY) * chartH;
+      pctx.beginPath();
+      pctx.moveTo(leftPad, y);
+      pctx.lineTo(w - rightPad, y);
+      pctx.stroke();
+      pctx.fillText(String(Math.round(tick)), leftPad - 6, y + 4);
+    });
+
+    pctx.save();
+    pctx.translate(14, topPad + chartH / 2);
+    pctx.rotate(-Math.PI / 2);
+    pctx.textAlign = 'center';
+    pctx.fillText('Fluorescenece (GCaMP signal)', 0, 0);
+    pctx.restore();
+
+    if (!data.length) return;
+
+    pctx.beginPath();
+    for (let i = 0; i < data.length; i++) {
+      const point = data[i];
+      const x = leftPad + ((point.x / maxX) * chartW);
+      const y = topPad + ((maxY - point.y) / maxY) * chartH;
+      if (i === 0) pctx.moveTo(x, y);
+      else pctx.lineTo(x, y);
+    }
+    pctx.strokeStyle = '#6e8f71';
+    pctx.lineWidth = 2;
+    pctx.stroke();
+
+    pctx.fillStyle = 'rgba(110,143,113,0.18)';
+    pctx.lineTo(leftPad + chartW, h - bottomPad);
+    pctx.lineTo(leftPad, h - bottomPad);
+    pctx.closePath();
+    pctx.fill();
   }
 
   function overlayPoint(evt) {
@@ -255,7 +293,7 @@ function startApp() {
     const w = Math.abs(p.x - dragStart.x);
     const h = Math.abs(p.y - dragStart.y);
 
-    if (w < 4 || h < 4) { // too small, ignore
+    if (w < 4 || h < 4) {
       drawOverlay();
       return;
     }
@@ -269,7 +307,7 @@ function startApp() {
       h: Math.round(h * scaleY),
     };
     clearRectBtn.disabled = false;
-    setStatus(`Rectangle set: <strong>${rect.w}\u00d7${rect.h}px</strong>. Press play to start sampling.`);
+    setStatus(`Rectangle set: <strong>${rect.w}×${rect.h}px</strong>. Press play to start sampling.`);
     drawOverlay();
   }
 
@@ -295,18 +333,24 @@ function startApp() {
     return sum / n;
   }
 
+  function resetTrace() {
+    data = [];
+    drawPlot();
+    clearPlotBtn.disabled = true;
+    exportBtn.disabled = true;
+  }
+
   function tick() {
     if (rect && !video.paused && !video.ended) {
       const y = meanBrightness();
       if (y !== null) {
         data.push({ x: video.currentTime, y: y });
-        chart.data.datasets[0].data = data;
-        chart.update('none');
+        drawPlot();
         clearPlotBtn.disabled = false;
         exportBtn.disabled = false;
       }
     }
-    rafId = requestAnimationFrame(tick);
+    requestAnimationFrame(tick);
   }
 
   video.addEventListener('error', () => {
@@ -316,12 +360,16 @@ function startApp() {
   video.addEventListener('loadedmetadata', () => {
     sampleCanvas.width = video.videoWidth;
     sampleCanvas.height = video.videoHeight;
+    drawPlot();
     resizeOverlay();
     playBtn.disabled = false;
-    setStatus(`Video loaded: <strong>${video.videoWidth}\u00d7${video.videoHeight}px</strong>, ${video.duration.toFixed(1)}s. Click and drag on the video to select a region.`);
+    setStatus(`Video loaded: <strong>${video.videoWidth}×${video.videoHeight}px</strong>, ${video.duration.toFixed(1)}s. Click and drag on the video to select a region.`);
   });
 
-  window.addEventListener('resize', resizeOverlay);
+  window.addEventListener('resize', () => {
+    resizeOverlay();
+    drawPlot();
+  });
 
   playBtn.addEventListener('click', () => {
     if (video.paused) {
@@ -334,9 +382,19 @@ function startApp() {
       video.pause();
     }
   });
+
   video.addEventListener('play', () => { playBtn.textContent = 'pause'; });
   video.addEventListener('pause', () => { playBtn.textContent = 'play'; });
-  video.addEventListener('ended', () => { playBtn.textContent = 'play'; });
+  video.addEventListener('timeupdate', () => {
+    if (video.currentTime < previousTime) {
+      resetTrace();
+    }
+    previousTime = video.currentTime;
+  });
+  video.addEventListener('ended', () => {
+    playBtn.textContent = 'play';
+    resetTrace();
+  });
 
   clearRectBtn.addEventListener('click', () => {
     rect = null;
@@ -346,11 +404,8 @@ function startApp() {
   });
 
   clearPlotBtn.addEventListener('click', () => {
-    data = [];
-    chart.data.datasets[0].data = data;
-    chart.update('none');
-    clearPlotBtn.disabled = true;
-    exportBtn.disabled = true;
+    resetTrace();
+    setStatus('Plot cleared.');
   });
 
   exportBtn.addEventListener('click', () => {
@@ -363,11 +418,9 @@ function startApp() {
     a.click();
   });
 
-  rafId = requestAnimationFrame(tick);
+  drawPlot();
+  requestAnimationFrame(tick);
 })();
-}
-
-startApp();
 </script>
 </body>
 </html>

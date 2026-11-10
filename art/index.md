@@ -5,7 +5,6 @@ permalink: /art/
 ---
 
 <p class="tab-label tab-label--art">Art</p>
-<h1>My art</h1>
 
 <h2 class="art-subheading art-subheading--digital">Digital</h2>
 <div class="art-grid">
