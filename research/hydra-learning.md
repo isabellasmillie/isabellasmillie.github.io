@@ -47,3 +47,13 @@ permalink: /research/hydra-learning/
   width="100%" height="700" style="border:none; border-radius:8px; display:block;" loading="lazy"></iframe>
 
 <p>Click and drag on the video to draw a region of interest, then watch the mean brightness inside that box update live as the footage plays. The trace resets cleanly each time the loop restarts, so the response can be compared across repeated stimulus presentations.</p>
+
+<div class="project-row">
+  <div class="project-row__photo">
+    <span>Virtual Hydra</span>
+  </div>
+  <div>
+    <h3><a href="https://isabellasmillie.github.io/VirtualHydra/">Virtual Hydra</a></h3>
+    <p class="project-description">Based on our asymmetric half-center circuit model of Hydra's RP1 &amp; CB ensembles</p>
+  </div>
+</div>

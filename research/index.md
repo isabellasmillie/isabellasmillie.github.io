@@ -14,6 +14,7 @@ permalink: /research/
   </div>
   <div>
     <h3><a href="https://isabellasmillie.github.io/VirtualHydra/">Virtual Hydra</a></h3>
+    <p class="project-description">Based on our asymmetric half-center circuit model of Hydra's RP1 &amp; CB ensembles</p>
   </div>
 </div>
 
