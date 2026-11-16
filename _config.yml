@@ -19,8 +19,6 @@ nav:
     url: /art/
   - title: Music
     url: /music/
-  - title: Blog
-    url: /blog/
 
 collections:
   posts:

@@ -11,7 +11,7 @@
     --line: #38383c;
     --text: #ede8de;
     --text-dim: #a8a39a;
-    --accent: #6e8f71;
+    --accent: #999934;
     --font-body: "Work Sans", -apple-system, sans-serif;
     --font-mono: "IBM Plex Mono", monospace;
   }
@@ -175,10 +175,10 @@
     octx.clearRect(0, 0, overlay.width, overlay.height);
     const r = previewDisplayRect || displayRectFromNative();
     if (!r) return;
-    octx.strokeStyle = '#6e8f71';
+    octx.strokeStyle = '#999934';
     octx.lineWidth = 2;
     octx.strokeRect(r.x, r.y, r.w, r.h);
-    octx.fillStyle = 'rgba(110,143,113,0.15)';
+    octx.fillStyle = 'rgba(153,153,52,0.15)';
     octx.fillRect(r.x, r.y, r.w, r.h);
   }
 
@@ -248,11 +248,11 @@
       if (i === 0) pctx.moveTo(x, y);
       else pctx.lineTo(x, y);
     }
-    pctx.strokeStyle = '#6e8f71';
+    pctx.strokeStyle = '#999934';
     pctx.lineWidth = 2;
     pctx.stroke();
 
-    pctx.fillStyle = 'rgba(110,143,113,0.18)';
+    pctx.fillStyle = 'rgba(153,153,52,0.18)';
     pctx.lineTo(leftPad + chartW, h - bottomPad);
     pctx.lineTo(leftPad, h - bottomPad);
     pctx.closePath();
