@@ -12,7 +12,7 @@ permalink: /research/nematostella-vectensis/
 <h2>Presentation slides</h2>
 <section class="nematostella-slideshow" data-nematostella-slideshow data-slide-prefix="{{ '/research/NematostellaPresentation/' | relative_url }}" aria-label="Nematostella knockdown presentation" tabindex="0">
   <div class="nematostella-slideshow__stage">
-    <img data-slide-image src="{{ '/research/NematostellaPresentation/Slide1.png' | relative_url }}" alt="Slide 1 of 13: Nematostella knockdown presentation">
+    <img data-slide-image src="{{ '/research/NematostellaPresentation/Slide1.jpeg' | relative_url }}" alt="Slide 1 of 13: Nematostella knockdown presentation">
   </div>
   <div class="nematostella-slideshow__controls">
     <button type="button" data-slide-previous aria-label="Previous slide">&larr;</button>
@@ -38,7 +38,7 @@ permalink: /research/nematostella-vectensis/
     let currentSlide = 0;
 
     const slideUrl = (index) => {
-      return `${prefix}Slide${index + 1}.png`;
+      return `${prefix}Slide${index + 1}.jpeg`;
     };
 
     const showSlide = (index) => {
