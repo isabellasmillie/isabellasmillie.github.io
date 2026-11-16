@@ -1,0 +1,11 @@
+<div class="presentation-slides">
+  {% for slide_number in (1..page.slide_count) %}
+    <figure>
+      <img
+        src="{{ '/research/' | append: page.slide_folder | append: '/Slide' | append: slide_number | append: '.jpeg' | relative_url }}"
+        alt="{{ page.title }} — slide {{ slide_number }} of {{ page.slide_count }}"
+        loading="lazy"
+        decoding="async">
+    </figure>
+  {% endfor %}
+</div>

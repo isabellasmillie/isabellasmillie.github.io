@@ -105,6 +105,16 @@ permalink: /research/hydra-learning/
   </figure>
 </div>
 
+<div class="project-row">
+  <div class="project-row__photo">
+    <img src="{{ '/assets/images/CnidofestPosterClip.jpeg' | relative_url }}" alt="Preview image of the Cnidofest 2026 poster">
+  </div>
+  <div>
+    <h3><a href="{{ '/research/cnidofest-2026-poster/' | relative_url }}">Cnidofest 2026 @ MBL - Poster</a></h3>
+    <p class="project-description">I presented progress on this work orally and as a poster</p>
+  </div>
+</div>
+
 <h2>Model and simulation of <em>Hydra</em>'s learning</h2>
 <p class="hydra-caption">Based on results from the above experiments, we built a model of an asymmetrical half-center circuit anchored to measured changes in ensemble activity and behavior following habituation to electrical stimulus and light stimulus.</p>
 <p class="hydra-interactive-caption">Explore <em>Hydra</em>'s learning in the simulation below.</p>

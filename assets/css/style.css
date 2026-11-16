@@ -87,11 +87,105 @@ button:focus-visible {
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.tab--research a:hover, .tab--research.tab--active a { color: var(--text); border-color: var(--accent-research); }
-.tab--art a:hover, .tab--art.tab--active a           { color: var(--text); border-color: var(--accent-art); }
-.tab--music a:hover, .tab--music.tab--active a       { color: var(--text); border-color: var(--accent-music); }
-.tab--blog a:hover, .tab--blog.tab--active a         { color: var(--text); border-color: var(--accent-blog); }
-.tab--about a:hover, .tab--about.tab--active a       { color: var(--text); border-color: var(--accent-about); }
+.tab--research > a:hover, .tab--research.tab--active > a { color: var(--text); border-color: var(--accent-research); }
+.tab--art > a:hover, .tab--art.tab--active > a           { color: var(--text); border-color: var(--accent-art); }
+.tab--music > a:hover, .tab--music.tab--active > a       { color: var(--text); border-color: var(--accent-music); }
+.tab--blog > a:hover, .tab--blog.tab--active > a         { color: var(--text); border-color: var(--accent-blog); }
+.tab--about > a:hover, .tab--about.tab--active > a       { color: var(--text); border-color: var(--accent-about); }
+
+.site-nav .tab--research-menu {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.research-menu__toggle {
+  display: inline-grid;
+  place-items: center;
+  padding: 0.2rem 0.15rem 0.35rem;
+  border: 0;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.research-menu__chevron {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-0.12rem) rotate(45deg);
+  transition: transform 0.18s ease;
+}
+
+.research-menu--open .research-menu__chevron {
+  transform: translateY(0.1rem) rotate(225deg);
+}
+
+.site-nav nav .research-menu__list {
+  position: absolute;
+  top: calc(100% - 0.1rem);
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: min(14rem, calc(100vw - 2rem));
+  max-height: min(75vh, 30rem);
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-alt);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  text-transform: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-0.4rem);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
+}
+
+.site-nav nav .research-menu--open .research-menu__list {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.site-nav .research-menu__list a {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.55rem;
+  border: 0;
+  border-radius: 0;
+  color: var(--text-dim);
+  line-height: 1.25;
+  white-space: normal;
+  text-align: center;
+}
+
+.research-menu__list li {
+  display: flex;
+}
+
+.research-menu__list li:hover,
+.research-menu__list li:focus-within {
+  background: rgba(153, 153, 52, 0.12);
+}
+
+.site-nav .research-menu__list li:hover a,
+.site-nav .research-menu__list li:focus-within a {
+  color: var(--accent-research);
+}
 
 /* ---- Page shell ---- */
 .page {
@@ -382,6 +476,85 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   text-align: center;
 }
 
+.presentation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.presentation-card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #000;
+  text-decoration: none;
+}
+
+.presentation-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.presentation-card span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.45rem 0.7rem;
+  background: rgba(15, 15, 15, 0.78);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.presentation-card:hover span,
+.presentation-card:focus-visible span {
+  background: var(--accent-research);
+  color: var(--bg);
+}
+
+.presentation-card:hover img {
+  transform: scale(1.025);
+}
+
+.presentation-slides {
+  display: grid;
+  gap: 1.5rem;
+  margin: 1.5rem auto 0;
+}
+
+.presentation-slides figure {
+  margin: 0;
+  background: #000;
+  border: 1px solid var(--line);
+}
+
+.presentation-slides img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.presentation-back-link {
+  margin: 0.5rem 0 1rem;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+.presentation-back-link a:hover,
+.presentation-back-link a:focus-visible {
+  color: var(--accent-research);
+}
+
 /* research project rows: photo left, title/link right */
 .project-row {
   display: grid;
@@ -412,6 +585,14 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   display: block;
 }
 
+.project-row__photo--thinknothink img {
+  object-position: 42% 45%;
+}
+
+.project-row__photo--misc img {
+  object-position: left center;
+}
+
 .project-row__photo span {
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -424,6 +605,10 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   margin: 0 0 0.25rem;
   font-size: 1.4rem;
   line-height: 1.1;
+}
+
+.project-row--text-only {
+  grid-template-columns: 1fr;
 }
 
 .section-heading {
@@ -588,6 +773,12 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 @media (max-width: 480px) {
   .project-row { grid-template-columns: 1fr; }
   .project-row__photo { width: 100%; height: 180px; }
+  .project-row__photo--thinknothink {
+    width: min(100%, 320px);
+    height: auto;
+    aspect-ratio: 1228 / 920;
+    margin-inline: auto;
+  }
 }
 
 /* image / media grid for art & music pages */
@@ -826,6 +1017,13 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 
 .neuroglancer-link a {
   color: var(--accent-research);
+}
+
+.poster-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 .art-grid {

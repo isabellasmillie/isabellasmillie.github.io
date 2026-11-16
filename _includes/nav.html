@@ -6,10 +6,59 @@
         {% assign is_active = false %}
         {% if page.url == item.url %}{% assign is_active = true %}{% endif %}
         {% assign slug = item.url | remove: "/" | default: "about" %}
-        <li class="tab tab--{{ slug }}{% if is_active %} tab--active{% endif %}">
+        <li class="tab tab--{{ slug }}{% if is_active %} tab--active{% endif %}{% if item.title == 'Research' %} tab--research-menu{% endif %}">
           <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+          {% if item.title == "Research" %}
+            <button class="research-menu__toggle" type="button" aria-label="Toggle research project menu" aria-expanded="false" aria-controls="research-project-menu">
+              <span class="research-menu__chevron" aria-hidden="true"></span>
+            </button>
+            <ul class="research-menu__list" id="research-project-menu" aria-label="Research projects">
+              <li><a href="https://isabellasmillie.github.io/VirtualHydra/"><span>virtual <em>hydra</em></span></a></li>
+              <li><a href="{{ '/research/hydra-learning/' | relative_url }}"><span><em>hydra</em> learning</span></a></li>
+              <li><a href="{{ '/research/hydra-liconn/' | relative_url }}"><span><em>hydra</em> liconn</span></a></li>
+              <li><a href="{{ '/research/nematostella-vectensis/' | relative_url }}">nematostella opsins</a></li>
+              <li><a href="{{ '/research/think-no-think/' | relative_url }}">think/no think</a></li>
+              <li><a href="{{ '/research/miscellaneous-undergraduate-presentations/' | relative_url }}">miscellaneous</a></li>
+            </ul>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>
   </nav>
 </header>
+
+<script>
+(() => {
+  const menuItem = document.querySelector(".tab--research-menu");
+  if (!menuItem) return;
+
+  const toggle = menuItem.querySelector(".research-menu__toggle");
+  const setOpen = (open) => {
+    menuItem.classList.toggle("research-menu--open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+  };
+
+  toggle.addEventListener("click", () => {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+  menuItem.addEventListener("mouseenter", () => setOpen(true));
+  menuItem.addEventListener("mouseleave", () => {
+    if (!menuItem.contains(document.activeElement)) setOpen(false);
+  });
+  menuItem.addEventListener("focusin", (event) => {
+    if (event.target !== toggle) setOpen(true);
+  });
+  menuItem.addEventListener("focusout", (event) => {
+    if (!menuItem.contains(event.relatedTarget)) setOpen(false);
+  });
+  document.addEventListener("click", (event) => {
+    if (!menuItem.contains(event.target)) setOpen(false);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menuItem.classList.contains("research-menu--open")) {
+      setOpen(false);
+      toggle.focus();
+    }
+  });
+})();
+</script>

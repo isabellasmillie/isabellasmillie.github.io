@@ -60,11 +60,21 @@ permalink: /research/
 </div>
 
 <div class="project-row">
-  <div class="project-row__photo">
-    <img src="{{ '/assets/images/research/think-no-think.jpg' | relative_url }}" alt="Think/No-Think replication study photo" onerror="this.parentElement.innerHTML='<span>photo</span>'">
+  <div class="project-row__photo project-row__photo--thinknothink">
+    <img src="{{ '/assets/images/thinknothink.jpeg' | relative_url }}" alt="Think/No-Think replication study graphic" onerror="this.parentElement.innerHTML='<span>photo</span>'">
   </div>
   <div>
     <h3><a href="{{ '/research/think-no-think/' | relative_url }}">Think/No-Think: a replication study</a></h3>
     <p class="project-description">My main undergraduate work at University of Texas at Austin</p>
+  </div>
+</div>
+
+<div class="project-row" id="miscellaneous-undergraduate-presentations">
+  <div class="project-row__photo project-row__photo--misc">
+    <img src="{{ '/assets/images/MiscProjects.jpeg' | relative_url }}" alt="Course presentation on hippocampal pathways">
+  </div>
+  <div>
+    <h3><a href="{{ '/research/miscellaneous-undergraduate-presentations/' | relative_url }}">Miscellaneous undergraduate presentations</a></h3>
+    <p class="project-description">Made by me for various courses</p>
   </div>
 </div>
