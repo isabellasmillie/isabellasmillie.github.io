@@ -12,7 +12,7 @@ title: About
   <div class="index-card__spine"></div>
   <div>
     <p class="tab-label tab-label--research">Research</p>
-    <h3><a href="{{ '/research/' | relative_url }}">Hydra vulgaris nervous system</a></h3>
+    <h3><a href="{{ '/research/' | relative_url }}"><em>Hydra vulgaris</em> nervous system</a></h3>
     <p>I evaluate simple circuit activity by combining high-throughput
     behavioral imaging with whole-body calcium imaging of transgenic
     GCaMP animals.</p>

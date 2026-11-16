@@ -5,7 +5,7 @@ permalink: /research/hydra-liconn/
 ---
 
 <p class="tab-label tab-label--research">Research</p>
-<h1>Hydra LICONN: Building the full connectome via expansion microscopy</h1>
+<h1><em>Hydra</em> LICONN: Building the full connectome via expansion microscopy</h1>
 
 <p class="lede">A short project summary goes here — goals, methods,
 and current status.</p>

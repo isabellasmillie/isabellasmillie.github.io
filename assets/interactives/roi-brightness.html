@@ -94,12 +94,6 @@
     border-radius: 4px;
   }
 
-  .hint {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--text-dim);
-    margin-top: 0.5rem;
-  }
 </style>
 </head>
 <body>
@@ -107,7 +101,7 @@
 <div class="app">
   <div class="pane video-pane">
     <div class="video-wrap">
-      <video id="video" playsinline src="/assets/videos/research/learning-web.mp4?v=baseline-20261110"></video>
+      <video id="video" playsinline loop src="/assets/videos/research/learning-web.mp4?v=baseline-20261110"></video>
       <canvas class="overlay" id="overlay"></canvas>
     </div>
     <div class="row">
@@ -117,7 +111,6 @@
       <button id="exportBtn" disabled>export csv</button>
     </div>
     <p class="status" id="status">Loading video&hellip;</p>
-    <p class="hint">Click and drag on the video to set the sampling rectangle. You can redraw it any time, including while the video plays.</p>
   </div>
 
   <div class="pane plot-pane">
@@ -354,7 +347,7 @@
   }
 
   video.addEventListener('error', () => {
-    setStatus('Could not load <strong>assets/videos/research/learning.mp4</strong>. Check that the file exists at that path relative to this tool.');
+    setStatus('Could not load <strong>assets/videos/research/learning-web.mp4</strong>. Check that the file exists at that path relative to this tool.');
   });
 
   video.addEventListener('loadedmetadata', () => {

@@ -5,8 +5,8 @@ permalink: /research/
 ---
 
 <p class="tab-label tab-label--research">Research</p>
-<h1>Hydra vulgaris nervous system</h1>
-<p class="lede">I currently work on 2 independent projects in Rafael&nbsp;Yuste's lab at Columbia University.</p>
+<h1><em>Hydra vulgaris</em> nervous system</h1>
+<p class="lede">I currently work on 2 independent projects in Rafael&nbsp;Yuste's <a href="https://blogs.cuit.columbia.edu/rmy5/">lab</a> at Columbia University.</p>
 
 <div class="project-row">
   <div class="project-row__photo">
@@ -16,8 +16,8 @@ permalink: /research/
     </video>
   </div>
   <div>
-    <h3><a href="https://isabellasmillie.github.io/VirtualHydra/">Virtual Hydra</a></h3>
-    <p class="project-description">Based on our asymmetric half-center circuit model of Hydra's RP1 &amp; CB ensembles</p>
+    <h3><a href="https://isabellasmillie.github.io/VirtualHydra/">Virtual <em>Hydra</em></a></h3>
+    <p class="project-description">Based on our asymmetric half-center circuit model of <em>Hydra</em>'s RP1 &amp; CB ensembles</p>
   </div>
 </div>
 
@@ -29,7 +29,7 @@ permalink: /research/
     </video>
   </div>
   <div>
-    <h3><a href="{{ '/research/hydra-learning/' | relative_url }}">Hydra Learning</a></h3>
+    <h3><a href="{{ '/research/hydra-learning/' | relative_url }}"><em>Hydra</em> Learning</a></h3>
     <p class="project-description">Evaluating ensemble function and adaptation to repeated stimuli</p>
   </div>
 </div>
@@ -42,7 +42,7 @@ permalink: /research/
     </video>
   </div>
   <div>
-    <h3><a href="{{ '/research/hydra-liconn/' | relative_url }}">Hydra LICONN</a></h3>
+    <h3><a href="{{ '/research/hydra-liconn/' | relative_url }}"><em>Hydra</em> LICONN</a></h3>
     <p class="project-description">Building the full connectome via expansion microscopy</p>
   </div>
 </div>
@@ -54,7 +54,7 @@ permalink: /research/
     <img src="{{ '/assets/images/nematostella.jpg' | relative_url }}" alt="Nematostella vectensis project photo" onerror="this.parentElement.innerHTML='<span>photo</span>'">
   </div>
   <div>
-    <h3><a href="{{ '/research/nematostella-vectensis/' | relative_url }}">Nematostella vectensis ASOI and ASOII knockdowns</a></h3>
+    <h3><a href="{{ '/research/nematostella-vectensis/' | relative_url }}">Nematostella vectensis ASOI opsin family knockdowns</a></h3>
     <p class="project-description">My summer 2024 work at University of Washington's Friday Harbor Laboratories</p>
   </div>
 </div>
