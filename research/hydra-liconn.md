@@ -2,14 +2,44 @@
 layout: default
 title: "Hydra LICONN: Building the full connectome via expansion microscopy"
 permalink: /research/hydra-liconn/
+neuroglancer_url: 'https://neuroglancer-demo.appspot.com/#!%7B%22dimensions%22:%7B%22z%22:%5B2.998661909009813e-7%2C%22m%22%5D%2C%22y%22:%5B3.014842512598992e-7%2C%22m%22%5D%2C%22x%22:%5B3.0148177288224473e-7%2C%22m%22%5D%7D%2C%22position%22:%5B1448.933837890625%2C5051.203125%2C4424%5D%2C%22crossSectionScale%22:33.11545195869233%2C%22projectionScale%22:16384%2C%22layers%22:%5B%7B%22type%22:%22image%22%2C%22source%22:%7B%22url%22:%22s3://dragonfly-expansion-data/merged_3_12.ome.zarr/%7Czarr2:%22%2C%22transform%22:%7B%22outputDimensions%22:%7B%22t%27%22:%5B0.001%2C%22s%22%5D%2C%22c%27%22:%5B1%2C%22%22%5D%2C%22z%22:%5B2.998661909009813e-7%2C%22m%22%5D%2C%22y%22:%5B3.014842512598992e-7%2C%22m%22%5D%2C%22x%22:%5B3.0148177288224473e-7%2C%22m%22%5D%7D%7D%7D%2C%22localDimensions%22:%7B%22t%27%22:%5B0.001%2C%22s%22%5D%2C%22c%27%22:%5B1%2C%22%22%5D%7D%2C%22localPosition%22:%5B0%2C0%5D%2C%22tab%22:%22rendering%22%2C%22shaderControls%22:%7B%22normalized%22:%7B%22range%22:%5B308%2C0%5D%7D%7D%2C%22name%22:%22merged_3_12.ome.zarr%22%7D%5D%2C%22selectedLayer%22:%7B%22visible%22:true%2C%22layer%22:%22merged_3_12.ome.zarr%22%7D%2C%22layout%22:%224panel-alt%22%2C%22uiControlVisibility%22:%7B%7D%7D'
 ---
 
 <p class="tab-label tab-label--research">Research</p>
 <h1><em>Hydra</em> LICONN: Building the full connectome via expansion microscopy</h1>
 
-<p class="lede">A short project summary goes here — goals, methods,
-and current status.</p>
+<h2 class="liconn-heading">Light-microscopy-based connectomics: 16-fold expansion of <em>Hydra</em> whole-body samples</h2>
+<p class="hydra-caption">I optimized <a href="https://www.nature.com/articles/s41586-025-08985-1">Tavakoli et al.</a>'s iterative expansion protocol for <em>Hydra</em>'s whole body. To achieve segmentable data, we use a pan-protein fluorescent label and neuron-specific antibodies.</p>
+<div class="hydra-gallery liconn-image-grid liconn-image-grid--protocol">
+  <figure><img src="{{ '/assets/images/LICONNProtocol.jpeg' | relative_url }}" alt="Protocol for iterative expansion microscopy"></figure>
+  <figure><img src="{{ '/assets/images/HydraTriExpanded.jpeg' | relative_url }}" alt="Expanded Hydra specimen"></figure>
+</div>
 
+<h2 class="liconn-heading">Confocal imaging of expanded <em>Hydra</em></h2>
+<p class="hydra-caption">After ordering a new Andor Dragonfly spin-disc confocal imaging system, overseeing its installation, and receiving training on its acquisition software, I established an imaging protocol to accurately and efficiently capture an expanded, hydrogel-embedded <em>Hydra</em> volumetrically.</p>
+<div class="hydra-gallery liconn-image-grid">
+  <figure><img src="{{ '/assets/images/Dragonfly-display.jpg' | relative_url }}" alt="Andor Dragonfly confocal microscope"></figure>
+  <figure><img src="{{ '/assets/images/DragonflyImage-display.jpg' | relative_url }}" alt="Confocal image captured using the Dragonfly system"></figure>
+</div>
+
+<h2 class="liconn-heading">Alignment of imaged volumes</h2>
+<p class="hydra-caption">Due to objective working-distance limits, a blockfacing technique had to be applied during volumetric imaging. I imaged as much gel as possible, then used a vibratome to remove a portion of the previously imaged gel, leaving a small amount to capture an overlap. This overlap is used to computationally align the separate volumes.</p>
+<div class="hydra-gallery liconn-image-grid liconn-image-grid--alignment">
+  <figure><img src="{{ '/assets/images/Aug_BF_3.jpeg' | relative_url }}" alt="Blockfaced volume section"></figure>
+  <figure><img src="{{ '/assets/images/AlignedBlocks.jpeg' | relative_url }}" alt="Aligned volumetric image blocks"></figure>
+</div>
+
+<h2 class="liconn-heading">Complete <em>Hydra</em> foot volume</h2>
+<p class="hydra-interactive-caption">Hover over a plane, hold shift, and scroll to explore <em>Hydra</em>'s foot. Hold Ctrl and scroll to zoom into individual cells.</p>
+{% assign neuroglancer_minimized_url = page.neuroglancer_url | replace: '%22selectedLayer%22:%7B%22visible%22:true', '%22selectedLayer%22:%7B%22visible%22:false' %}
+<iframe class="neuroglancer-viewer" src="{{ neuroglancer_minimized_url | escape }}"
+  title="Interactive Neuroglancer view of the Hydra LICONN volume"
+  allowfullscreen loading="lazy"></iframe>
+<p class="neuroglancer-link"><a href="{{ neuroglancer_minimized_url | escape }}" target="_blank" rel="noopener">Open Neuroglancer in a new tab</a></p>
+
+<h2 class="liconn-heading">Segmentation and 3D reconstruction</h2>
+<p class="hydra-caption">Using webKnossos segmentation software, my team of undergraduates has begun annotating our volumetric data. For rapid and reliable data access, webKnossos livestreams our Zarr volume from our AWS bucket.</p>
+<p class="model-legend"><span class="model-legend__muscles">Muscles</span><span class="model-legend__neurons">Neurons</span><span class="model-legend__unknown">Unknown 'ring' structure</span></p>
 <div class="model-canvas-wrapper" id="hydra-model-container">
   <div class="model-canvas-helper">Drag to rotate, scroll to zoom</div>
 </div>
@@ -132,8 +162,3 @@ function animate() {
 }
 animate();
 </script>
-
-<p>Replace this paragraph with the full project description: background,
-approach, what LICONN (light microscopy-based connectomics) lets you
-resolve at the whole-animal scale, and where the project currently
-stands.</p>

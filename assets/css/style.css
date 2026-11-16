@@ -492,6 +492,30 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   background: #000;
 }
 
+.liconn-image-grid img {
+  height: 320px;
+}
+
+.liconn-image-grid--protocol {
+  grid-template-columns: minmax(0, 1.46fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.liconn-image-grid--protocol img {
+  height: auto;
+  object-fit: contain;
+}
+
+.liconn-image-grid--alignment {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.28fr);
+  align-items: start;
+}
+
+.liconn-image-grid--alignment img {
+  height: auto;
+  object-fit: contain;
+}
+
 .hydra-gallery--chambers a {
   display: block;
   cursor: zoom-in;
@@ -519,6 +543,10 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   line-height: 1.6;
 }
 
+.liconn-heading {
+  margin-top: 3.75rem;
+}
+
 .hydra-interactive-caption {
   margin: 0.35rem 0 1.5rem;
   color: var(--accent-research);
@@ -541,6 +569,15 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   .hydra-gallery img,
   .hydra-gallery video {
     height: 260px;
+  }
+
+  .liconn-image-grid img {
+    height: 260px;
+  }
+
+  .liconn-image-grid--alignment img {
+    height: 260px;
+    object-fit: cover;
   }
 
   .hydra-interactive-frame {
@@ -716,6 +753,18 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   margin-top: 0.5rem;
 }
 
+.model-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 1.25rem 0 0;
+  font-weight: 700;
+}
+
+.model-legend__muscles { color: #e89a43; }
+.model-legend__neurons { color: var(--accent-music); }
+.model-legend__unknown { color: #84aa52; }
+
 .model-canvas-wrapper {
   position: relative;
   width: 100%;
@@ -757,6 +806,26 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   font-size: 0.82rem;
   color: var(--text-dim);
   pointer-events: none;
+}
+
+.neuroglancer-viewer {
+  display: block;
+  width: 100%;
+  height: min(75vh, 900px);
+  min-height: 560px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #111;
+}
+
+.neuroglancer-link {
+  margin: 0.75rem 0 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.neuroglancer-link a {
+  color: var(--accent-research);
 }
 
 .art-grid {

@@ -55,15 +55,19 @@ permalink: /research/hydra-learning/
     const resizeFrame = () => {
       const frameDocument = frame.contentDocument;
       if (!frameDocument) return;
-      frame.style.height = `${Math.max(frameDocument.documentElement.scrollHeight, frameDocument.body.scrollHeight)}px`;
+      const app = frameDocument.querySelector(".app");
+      if (!app) return;
+      frame.style.height = `${Math.ceil(app.getBoundingClientRect().height) + 2}px`;
     };
 
     let resizeObserver;
     frame.addEventListener("load", () => {
       const frameDocument = frame.contentDocument;
       if (!frameDocument) return;
+      const app = frameDocument.querySelector(".app");
+      if (!app) return;
       resizeObserver = new ResizeObserver(resizeFrame);
-      resizeObserver.observe(frameDocument.documentElement);
+      resizeObserver.observe(app);
       resizeFrame();
     });
     window.addEventListener("resize", resizeFrame);
