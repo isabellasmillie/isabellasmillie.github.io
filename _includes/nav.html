@@ -1,5 +1,8 @@
 <header class="site-nav">
-  <a class="site-nav__home" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+  <a class="site-nav__home" href="{{ '/' | relative_url }}">
+    <span>{{ site.title }}</span>
+    <img class="site-nav__icon" src="{{ '/favicon.svg' | relative_url }}" alt="">
+  </a>
   <nav>
     <ul>
       {% for item in site.nav %}

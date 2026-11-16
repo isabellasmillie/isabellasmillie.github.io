@@ -61,11 +61,21 @@ button:focus-visible {
 }
 
 .site-nav__home {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-family: var(--font-display);
   font-size: 1.15rem;
   font-weight: 600;
   text-decoration: none;
   letter-spacing: 0.01em;
+}
+
+.site-nav__icon {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
 }
 
 .site-nav nav ul {
