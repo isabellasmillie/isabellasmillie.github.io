@@ -3,6 +3,8 @@ layout: default
 title: About
 ---
 
+<img class="about-photo" src="{{ '/assets/images/me_2-display.jpg' | relative_url }}" alt="Isabella" fetchpriority="high">
+
 # Hi, I'm Isabella.
 
 <div class="index-card index-card--research">

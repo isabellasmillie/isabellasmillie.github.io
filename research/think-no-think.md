@@ -7,7 +7,9 @@ permalink: /research/think-no-think/
 <p class="tab-label tab-label--research">Research</p>
 <h1>Think/No-Think: a replication study</h1>
 
-<p class="lede">My main undergraduate work at University of Texas at Austin.</p>
+<p class="lede">My main undergraduate work at University of Texas at Austin contributed data to a global replication of the <a href="https://www.nature.com/articles/35066572">Think/No Think working memory removal study</a> from 2003. I carefully followed a defined protocol coding verbal responses in PsychoPy during 90-minute behavioral experiments on undergraduate Psychology majors. I proofread and cleaned my data, and uploaded it to GitHub for official submission to the study.</p>
+
+<p>The study is currently forthcoming in <em>Nature Human Behavior</em>.</p>
 
 <h2>Presentation slides</h2>
 <section class="nematostella-slideshow" data-tnt-slideshow data-slide-prefix="{{ '/research/TNTPresentation/' | relative_url }}" aria-label="Think/No-Think presentation" tabindex="0">

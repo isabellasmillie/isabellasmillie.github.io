@@ -7,7 +7,11 @@ permalink: /research/nematostella-vectensis/
 <p class="tab-label tab-label--research">Research</p>
 <h1>Nematostella vectensis ASOI opsin family knockdowns</h1>
 
-<p class="lede">My summer 2024 project at University of Washington's Friday Harbor Laboratories.</p>
+<p class="lede">My summer 2024 project at University of Washington's Friday Harbor Laboratories investigated behavioral and morphological effects of ASOI opsin gene family knockdown in burrowing sea anemone <em>Nematostella vectensis</em> larvae.</p>
+
+<p>I used microinjection of custom shRNA, behavioral paradigms, immunostaining and confocal microscopy, and found hindered morphological development in ASOI-1 knockdown individuals, with no ramifications on normal light-sensing behavior.</p>
+
+<p>This suggests a light-opsin protein has been evolutionarily co-opted for development cues, a novel function for opsin in <em>Nematostella</em>.</p>
 
 <h2>Presentation slides</h2>
 <section class="nematostella-slideshow" data-nematostella-slideshow data-slide-prefix="{{ '/research/NematostellaPresentation/' | relative_url }}" aria-label="Nematostella knockdown presentation" tabindex="0">
@@ -21,8 +25,6 @@ permalink: /research/nematostella-vectensis/
   </div>
   <p class="nematostella-slideshow__hint">Use the left and right arrow keys or the buttons to navigate.</p>
 </section>
-
-<p>Replace this paragraph with the full project description: the experimental design for ASO knockdowns, key findings, and the significance of this work for cnidarian developmental biology.</p>
 
 <script>
   (() => {
