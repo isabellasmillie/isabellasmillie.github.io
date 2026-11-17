@@ -15,7 +15,8 @@
   --text: #ede8de;
   --text-dim: #a8a39a;
 
-  --accent-about:    #c9c3b6; /* neutral parchment tab for the home/about entry */
+  --accent-home:     #c9c3b6;
+  --accent-about:    #88ccee;
   --accent-research: #999934;
   --accent-art:      #aa4599;
   --accent-music:    #5b72c6;
@@ -97,20 +98,23 @@ button:focus-visible {
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.tab--research > a:hover, .tab--research.tab--active > a { color: var(--text); border-color: var(--accent-research); }
+.tab--research > a:hover, .tab--research.tab--active > a { color: var(--accent-research); border-color: var(--accent-research); }
 .tab--art > a:hover, .tab--art.tab--active > a           { color: var(--text); border-color: var(--accent-art); }
 .tab--music > a:hover, .tab--music.tab--active > a       { color: var(--text); border-color: var(--accent-music); }
 .tab--blog > a:hover, .tab--blog.tab--active > a         { color: var(--text); border-color: var(--accent-blog); }
-.tab--about > a:hover, .tab--about.tab--active > a       { color: var(--text); border-color: var(--accent-about); }
+.tab--home > a:hover, .tab--home.tab--active > a         { color: var(--accent-home); border-color: var(--accent-home); }
+.tab--about > a:hover, .tab--about.tab--active > a       { color: var(--accent-about); border-color: var(--accent-about); }
 
-.site-nav .tab--research-menu {
+.site-nav .tab--research-menu,
+.site-nav .tab--about-menu {
   position: relative;
   display: flex;
   align-items: baseline;
   gap: 0.3rem;
 }
 
-.research-menu__toggle {
+.research-menu__toggle,
+.about-menu__toggle {
   display: inline-grid;
   place-items: center;
   padding: 0.2rem 0.15rem 0.35rem;
@@ -120,7 +124,8 @@ button:focus-visible {
   cursor: pointer;
 }
 
-.research-menu__chevron {
+.research-menu__chevron,
+.about-menu__chevron {
   width: 0.45rem;
   height: 0.45rem;
   border-right: 1.5px solid currentColor;
@@ -129,11 +134,13 @@ button:focus-visible {
   transition: transform 0.18s ease;
 }
 
-.research-menu--open .research-menu__chevron {
+.research-menu--open .research-menu__chevron,
+.about-menu--open .about-menu__chevron {
   transform: translateY(0.1rem) rotate(225deg);
 }
 
-.site-nav nav .research-menu__list {
+.site-nav nav .research-menu__list,
+.site-nav nav .about-menu__list {
   position: absolute;
   top: calc(100% - 0.1rem);
   right: 0;
@@ -159,7 +166,8 @@ button:focus-visible {
   transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s;
 }
 
-.site-nav nav .research-menu--open .research-menu__list {
+.site-nav nav .research-menu--open .research-menu__list,
+.site-nav nav .about-menu--open .about-menu__list {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -167,7 +175,8 @@ button:focus-visible {
   transition-delay: 0s;
 }
 
-.site-nav .research-menu__list a {
+.site-nav .research-menu__list a,
+.site-nav .about-menu__list a {
   display: flex;
   flex: 1;
   width: 100%;
@@ -183,7 +192,8 @@ button:focus-visible {
   text-align: center;
 }
 
-.research-menu__list li {
+.research-menu__list li,
+.about-menu__list li {
   display: flex;
 }
 
@@ -195,6 +205,26 @@ button:focus-visible {
 .site-nav .research-menu__list li:hover a,
 .site-nav .research-menu__list li:focus-within a {
   color: var(--accent-research);
+}
+
+.about-menu__item--art:hover,
+.about-menu__item--art:focus-within {
+  background: rgba(170, 69, 153, 0.12);
+}
+
+.site-nav .about-menu__item--art:hover a,
+.site-nav .about-menu__item--art:focus-within a {
+  color: var(--accent-art);
+}
+
+.about-menu__item--music:hover,
+.about-menu__item--music:focus-within {
+  background: rgba(91, 114, 198, 0.12);
+}
+
+.site-nav .about-menu__item--music:hover a,
+.site-nav .about-menu__item--music:focus-within a {
+  color: var(--accent-music);
 }
 
 /* ---- Page shell ---- */
@@ -282,6 +312,10 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   background: rgba(91, 114, 198, 0.3);
 }
 
+.index-card--about .index-card__illustration--photo::after {
+  background: rgba(136, 204, 238, 0.2);
+}
+
 .index-card--art {
   grid-template-columns: 120px 4px minmax(0, 1fr);
 }
@@ -312,6 +346,10 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
   grid-template-columns: 120px 4px minmax(0, 1fr);
 }
 
+.index-card--about {
+  grid-template-columns: 120px 4px minmax(0, 1fr);
+}
+
 .index-card--research .index-card__illustration--photo img {
   object-position: 90% top;
 }
@@ -320,6 +358,7 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 .index-card--research .index-card__spine { background: var(--accent-research); }
 .index-card--art .index-card__spine      { background: var(--accent-art); }
 .index-card--music .index-card__spine    { background: var(--accent-music); }
+.index-card--about .index-card__spine    { background: var(--accent-about); }
 .index-card--blog .index-card__spine     { background: var(--accent-blog); }
 
 .index-card > div:last-child {
@@ -339,7 +378,20 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 .tab-label--research { color: var(--accent-research); }
 .tab-label--art       { color: var(--accent-art); }
 .tab-label--music     { color: var(--accent-music); }
+.tab-label--about     { color: var(--accent-about); }
 .tab-label--blog      { color: var(--accent-blog); }
+
+.tab-label--about a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.tab-label--about a:hover,
+.tab-label--about a:focus-visible {
+  color: var(--accent-about);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
 
 .index-card h3 {
   font-size: 1.3rem;
@@ -376,6 +428,8 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 .index-card--art h3 a:focus-visible { color: var(--accent-art); }
 .index-card--music h3 a:hover,
 .index-card--music h3 a:focus-visible { color: var(--accent-music); }
+.index-card--about h3 a:hover,
+.index-card--about h3 a:focus-visible { color: var(--accent-about); }
 
 .index-card p {
   color: var(--text-dim);
@@ -408,6 +462,8 @@ h2 { font-size: 1.5rem; margin-top: 3rem; }
 .index-card--art a.more:focus-visible { color: var(--accent-art); border-color: var(--accent-art); }
 .index-card--music a.more:hover,
 .index-card--music a.more:focus-visible { color: var(--accent-music); border-color: var(--accent-music); }
+.index-card--about a.more:hover,
+.index-card--about a.more:focus-visible { color: var(--accent-about); border-color: var(--accent-about); }
 
 /* ---- Section pages ---- */
 .section-list {

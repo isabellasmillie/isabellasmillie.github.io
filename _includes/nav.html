@@ -9,12 +9,22 @@
         {% assign is_active = false %}
         {% if page.url == item.url %}{% assign is_active = true %}{% endif %}
         {% assign slug = item.url | remove: "/" | default: "about" %}
-        <li class="tab tab--{{ slug }}{% if is_active %} tab--active{% endif %}{% if item.title == 'Research' %} tab--research-menu{% endif %}">
+        {% if item.title == "Home" %}{% assign slug = "home" %}{% endif %}
+        <li class="tab tab--{{ slug }}{% if is_active %} tab--active{% endif %}{% if item.title == 'Research' %} tab--research-menu{% elsif item.title == 'About Me' %} tab--about-menu{% endif %}">
           <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
-          {% if item.title == "Research" %}
-            <button class="research-menu__toggle" type="button" aria-label="Toggle research project menu" aria-expanded="false" aria-controls="research-project-menu">
-              <span class="research-menu__chevron" aria-hidden="true"></span>
+          {% if item.title == "Research" or item.title == "About Me" %}
+            {% assign menu_slug = slug %}
+            {% if item.title == "Research" %}
+              {% assign menu_label = "research project" %}
+              {% assign menu_id = "research-project-menu" %}
+            {% else %}
+              {% assign menu_label = "about me" %}
+              {% assign menu_id = "about-menu" %}
+            {% endif %}
+            <button class="{{ menu_slug }}-menu__toggle" type="button" aria-label="Toggle {{ menu_label }} menu" aria-expanded="false" aria-controls="{{ menu_id }}">
+              <span class="{{ menu_slug }}-menu__chevron" aria-hidden="true"></span>
             </button>
+            {% if item.title == "Research" %}
             <ul class="research-menu__list" id="research-project-menu" aria-label="Research projects">
               <li><a href="https://isabellasmillie.github.io/VirtualHydra/"><span>virtual <em>hydra</em></span></a></li>
               <li><a href="{{ '/research/hydra-learning/' | relative_url }}"><span><em>hydra</em> learning</span></a></li>
@@ -23,6 +33,12 @@
               <li><a href="{{ '/research/think-no-think/' | relative_url }}">think/no think</a></li>
               <li><a href="{{ '/research/miscellaneous-undergraduate-presentations/' | relative_url }}">miscellaneous</a></li>
             </ul>
+            {% else %}
+            <ul class="about-menu__list" id="{{ menu_id }}" aria-label="About me pages">
+              <li class="about-menu__item--art"><a href="{{ '/art/' | relative_url }}">art</a></li>
+              <li class="about-menu__item--music"><a href="{{ '/music/' | relative_url }}">music</a></li>
+            </ul>
+            {% endif %}
           {% endif %}
         </li>
       {% endfor %}
@@ -32,36 +48,38 @@
 
 <script>
 (() => {
-  const menuItem = document.querySelector(".tab--research-menu");
-  if (!menuItem) return;
+  document.querySelectorAll(".tab--research-menu, .tab--about-menu").forEach((menuItem) => {
+    const toggle = menuItem.querySelector("button");
+    const openClass = menuItem.classList.contains("tab--research-menu")
+      ? "research-menu--open"
+      : "about-menu--open";
+    const setOpen = (open) => {
+      menuItem.classList.toggle(openClass, open);
+      toggle.setAttribute("aria-expanded", String(open));
+    };
 
-  const toggle = menuItem.querySelector(".research-menu__toggle");
-  const setOpen = (open) => {
-    menuItem.classList.toggle("research-menu--open", open);
-    toggle.setAttribute("aria-expanded", String(open));
-  };
-
-  toggle.addEventListener("click", () => {
-    setOpen(toggle.getAttribute("aria-expanded") !== "true");
-  });
-  menuItem.addEventListener("mouseenter", () => setOpen(true));
-  menuItem.addEventListener("mouseleave", () => {
-    if (!menuItem.contains(document.activeElement)) setOpen(false);
-  });
-  menuItem.addEventListener("focusin", (event) => {
-    if (event.target !== toggle) setOpen(true);
-  });
-  menuItem.addEventListener("focusout", (event) => {
-    if (!menuItem.contains(event.relatedTarget)) setOpen(false);
-  });
-  document.addEventListener("click", (event) => {
-    if (!menuItem.contains(event.target)) setOpen(false);
-  });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && menuItem.classList.contains("research-menu--open")) {
-      setOpen(false);
-      toggle.focus();
-    }
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+    menuItem.addEventListener("mouseenter", () => setOpen(true));
+    menuItem.addEventListener("mouseleave", () => {
+      if (!menuItem.contains(document.activeElement)) setOpen(false);
+    });
+    menuItem.addEventListener("focusin", (event) => {
+      if (event.target !== toggle) setOpen(true);
+    });
+    menuItem.addEventListener("focusout", (event) => {
+      if (!menuItem.contains(event.relatedTarget)) setOpen(false);
+    });
+    document.addEventListener("click", (event) => {
+      if (!menuItem.contains(event.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menuItem.classList.contains(openClass)) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
   });
 })();
 </script>

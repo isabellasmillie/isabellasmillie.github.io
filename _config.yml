@@ -11,14 +11,12 @@ permalink: /blog/:year/:month/:day/:title/
 
 # Nav bar order + labels. Edit this list to add/remove/reorder sections.
 nav:
-  - title: About
+  - title: Home
     url: /
   - title: Research
     url: /research/
-  - title: Art
-    url: /art/
-  - title: Music
-    url: /music/
+  - title: About Me
+    url: /about/
 
 collections:
   posts:
